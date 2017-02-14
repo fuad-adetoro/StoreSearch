@@ -58,9 +58,9 @@ extension SearchViewController: UITableViewDataSource {
         if searchResults.count == 0 {
             if hasSearched {
                 return 1
+            }else {
+                return 0
             }
-            
-            return 0
         }
         
         return searchResults.count
