@@ -20,11 +20,51 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iUk-D9-dw3">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="knv-JH-mSC"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="4zQ-Ph-dBy"/>
+                                </connections>
+                            </tableView>
+                            <searchBar contentMode="redraw" placeholder="App name, artist, song, album, e-book" translatesAutoresizingMaskIntoConstraints="NO" id="tyS-wL-EHi">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Njk-nR-Sq0"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="iUk-D9-dw3" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EFR-fO-fpd"/>
+                            <constraint firstItem="tyS-wL-EHi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="QJN-8O-DvX"/>
+                            <constraint firstAttribute="trailing" secondItem="tyS-wL-EHi" secondAttribute="trailing" id="fDP-JE-pmM"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="iUk-D9-dw3" secondAttribute="bottom" id="ftc-Ku-CHf"/>
+                            <constraint firstItem="iUk-D9-dw3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kxZ-ir-exQ"/>
+                            <constraint firstItem="tyS-wL-EHi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="mDx-x9-bTN"/>
+                            <constraint firstAttribute="trailing" secondItem="iUk-D9-dw3" secondAttribute="trailing" id="p8j-wO-9W2"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchBar" destination="tyS-wL-EHi" id="o1P-Jm-xTA"/>
+                        <outlet property="searchDisplayController" destination="Upo-mN-Jv9" id="cIY-3Z-jYd"/>
+                        <outlet property="tableView" destination="iUk-D9-dw3" id="7ZJ-dM-hod"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="Upo-mN-Jv9">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="GAL-HN-Dcc"/>
+                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="jla-z6-0Lr"/>
+                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="49s-D7-p2m"/>
+                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="Jm6-eZ-pYk"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="37.331334332833585"/>
         </scene>
     </scenes>
 </document>
