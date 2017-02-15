@@ -53,24 +53,11 @@ class SearchViewController: UIViewController {
         return url!
     }
     
-    func performStoreRequest(with url: URL) -> String? {
-        do {
-            return try String(contentsOf: url, encoding: .utf8)
-        } catch {
-            print("Download Error: \(error)")
-            return nil
-        }
-    }
-    
     // JSON parser
     
-    func parse(json: String) -> [String: Any]? {
-        guard let data = json.data(using: .utf8, allowLossyConversion: false) else {
-            return nil
-        }
-        
+    func parse(json: Data) -> [String: Any]? {
         do {
-            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            return try JSONSerialization.jsonObject(with: json, options: []) as? [String: Any]
         } catch {
             print("JSON Error: \(error)")
             return nil
@@ -239,6 +226,7 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchResults = []
+        searchBar.resignFirstResponder()
         
         if !searchBar.text!.isEmpty {
             searchResults = []
@@ -246,38 +234,39 @@ extension SearchViewController: UISearchBarDelegate {
             isLoading = true
             tableView.reloadData()
             
-            let queue = DispatchQueue.global()
+            let url = iTunesURL(searchText: searchBar.text!)
             
-            queue.async {
-                
-                // Code that runs in the background...
-                let url = self.iTunesURL(searchText: searchBar.text!)
-                
-                if let jsonString = self.performStoreRequest(with: url) {
-                    if let jsonDictionary = self.parse(json: jsonString) {
-                        print("Dictionary: \(jsonDictionary)")
+            let session = URLSession.shared
+            
+            let dataTask = session.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    print("Failure! \(error)")
+                } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    if let data = data, let jsonDictionary = self.parse(json: data) {
                         self.searchResults = self.parse(dictionary: jsonDictionary)
                         self.searchResults.sort(by: <)
                         
                         DispatchQueue.main.async {
-                            // updating the user interface on the main thread.
                             self.isLoading = false
                             self.tableView.reloadData()
                         }
                         
                         return
                     }
+                } else {
+                    print("Failure! \(response!)")
                 }
                 
-                print("Error")
                 DispatchQueue.main.async {
-                  self.showNetworkError()
+                    self.hasSearched = false
+                    self.isLoading = false
+                    self.tableView.reloadData()
+                    self.showNetworkError()
                 }
             }
+            
+            dataTask.resume()
         }
-        
-        hasSearched = true
-        searchBar.resignFirstResponder()
     }
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {
