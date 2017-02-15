@@ -30,6 +30,9 @@ class SearchViewController: UIViewController {
         
         // Table view was conflicting with the search bar so I moved it down by 64 points.
         tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+        
+        // Open keyboard for Search as soon as app starts
+        searchBar.becomeFirstResponder()
     }
 
     struct TableViewCellIdentifiers {
@@ -68,7 +71,7 @@ extension SearchViewController: UITableViewDataSource {
         if searchResults.count == 0 {
             if hasSearched {
                 return 1
-            }else {
+            } else {
                 return 0
             }
         }
