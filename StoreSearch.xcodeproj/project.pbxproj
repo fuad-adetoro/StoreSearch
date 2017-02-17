@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2C9B1731E56921B00CC63DB /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C9B1721E56921B00CC63DB /* GradientView.swift */; };
+		A2C9B1751E569CFE00CC63DB /* BounceAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C9B1741E569CFE00CC63DB /* BounceAnimationController.swift */; };
+		A2C9B1771E56A56100CC63DB /* SlideOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C9B1761E56A56100CC63DB /* SlideOutAnimationController.swift */; };
 		A2CD6D811E5279050023248B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CD6D801E5279040023248B /* AppDelegate.swift */; };
 		A2CD6D831E5279050023248B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CD6D821E5279050023248B /* SearchViewController.swift */; };
 		A2CD6D861E5279060023248B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2CD6D841E5279060023248B /* Main.storyboard */; };
@@ -22,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A2C9B1721E56921B00CC63DB /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		A2C9B1741E569CFE00CC63DB /* BounceAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BounceAnimationController.swift; sourceTree = "<group>"; };
+		A2C9B1761E56A56100CC63DB /* SlideOutAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOutAnimationController.swift; sourceTree = "<group>"; };
 		A2CD6D7D1E5279040023248B /* StoreSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2CD6D801E5279040023248B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2CD6D821E5279050023248B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -70,17 +76,20 @@
 			children = (
 				A2CD6D801E5279040023248B /* AppDelegate.swift */,
 				A2CD6D871E5279060023248B /* Assets.xcassets */,
+				A2C9B1741E569CFE00CC63DB /* BounceAnimationController.swift */,
+				A2CD6D9E1E5619DC0023248B /* DetailViewController.swift */,
+				A2CD6DA01E561D1E0023248B /* DimmingPresentationController.swift */,
+				A2C9B1721E56921B00CC63DB /* GradientView.swift */,
 				A2CD6D8C1E5279070023248B /* Info.plist */,
+				A2CD6D9A1E54BA3B0023248B /* LoadingCell.xib */,
 				A2CD6D841E5279060023248B /* Main.storyboard */,
 				A2CD6D981E53E9230023248B /* NothingFoundCell.xib */,
 				A2CD6D921E53B0CA0023248B /* SearchResult.swift */,
 				A2CD6D961E53E1BA0023248B /* SearchResultCell.swift */,
 				A2CD6D941E53D9BB0023248B /* SearchResultCell.xib */,
 				A2CD6D821E5279050023248B /* SearchViewController.swift */,
-				A2CD6D9A1E54BA3B0023248B /* LoadingCell.xib */,
+				A2C9B1761E56A56100CC63DB /* SlideOutAnimationController.swift */,
 				A2CD6D9C1E553A100023248B /* UIImage+DownloadImage.swift */,
-				A2CD6D9E1E5619DC0023248B /* DetailViewController.swift */,
-				A2CD6DA01E561D1E0023248B /* DimmingPresentationController.swift */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
@@ -164,9 +173,12 @@
 				A2CD6DA11E561D1E0023248B /* DimmingPresentationController.swift in Sources */,
 				A2CD6D931E53B0CA0023248B /* SearchResult.swift in Sources */,
 				A2CD6D971E53E1BA0023248B /* SearchResultCell.swift in Sources */,
+				A2C9B1751E569CFE00CC63DB /* BounceAnimationController.swift in Sources */,
 				A2CD6D9F1E5619DC0023248B /* DetailViewController.swift in Sources */,
 				A2CD6D9D1E553A100023248B /* UIImage+DownloadImage.swift in Sources */,
+				A2C9B1731E56921B00CC63DB /* GradientView.swift in Sources */,
 				A2CD6D811E5279050023248B /* AppDelegate.swift in Sources */,
+				A2C9B1771E56A56100CC63DB /* SlideOutAnimationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
