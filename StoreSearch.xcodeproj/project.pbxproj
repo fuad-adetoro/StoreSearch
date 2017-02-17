@@ -17,6 +17,8 @@
 		A2CD6D991E53E9230023248B /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2CD6D981E53E9230023248B /* NothingFoundCell.xib */; };
 		A2CD6D9B1E54BA3B0023248B /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2CD6D9A1E54BA3B0023248B /* LoadingCell.xib */; };
 		A2CD6D9D1E553A100023248B /* UIImage+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CD6D9C1E553A100023248B /* UIImage+DownloadImage.swift */; };
+		A2CD6D9F1E5619DC0023248B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CD6D9E1E5619DC0023248B /* DetailViewController.swift */; };
+		A2CD6DA11E561D1E0023248B /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CD6DA01E561D1E0023248B /* DimmingPresentationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		A2CD6D981E53E9230023248B /* NothingFoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NothingFoundCell.xib; path = ../NothingFoundCell.xib; sourceTree = "<group>"; };
 		A2CD6D9A1E54BA3B0023248B /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		A2CD6D9C1E553A100023248B /* UIImage+DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+DownloadImage.swift"; sourceTree = "<group>"; };
+		A2CD6D9E1E5619DC0023248B /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		A2CD6DA01E561D1E0023248B /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				A2CD6D821E5279050023248B /* SearchViewController.swift */,
 				A2CD6D9A1E54BA3B0023248B /* LoadingCell.xib */,
 				A2CD6D9C1E553A100023248B /* UIImage+DownloadImage.swift */,
+				A2CD6D9E1E5619DC0023248B /* DetailViewController.swift */,
+				A2CD6DA01E561D1E0023248B /* DimmingPresentationController.swift */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
@@ -155,8 +161,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2CD6D831E5279050023248B /* SearchViewController.swift in Sources */,
+				A2CD6DA11E561D1E0023248B /* DimmingPresentationController.swift in Sources */,
 				A2CD6D931E53B0CA0023248B /* SearchResult.swift in Sources */,
 				A2CD6D971E53E1BA0023248B /* SearchResultCell.swift in Sources */,
+				A2CD6D9F1E5619DC0023248B /* DetailViewController.swift in Sources */,
 				A2CD6D9D1E553A100023248B /* UIImage+DownloadImage.swift in Sources */,
 				A2CD6D811E5279050023248B /* AppDelegate.swift in Sources */,
 			);
@@ -312,6 +320,7 @@
 				A2CD6D911E5279070023248B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
