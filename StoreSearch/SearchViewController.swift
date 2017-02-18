@@ -22,6 +22,56 @@ class SearchViewController: UIViewController {
     
     var dataTask: URLSessionDataTask?
     
+    var landscapeViewController: LandscapeViewController?
+    
+    func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        guard landscapeViewController == nil else {
+            return
+        }
+        
+        // Finding the scene with "LandscapeViewController" then casting it to LandscapeViewController and assigning it to variable landscapeViewController
+        landscapeViewController = storyboard!.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
+        
+        if let controller = landscapeViewController {
+            // Set the size of the controller to equal SearchViewController
+            controller.view.frame = view.bounds
+            controller.view.alpha = 0
+            // Add the controller as a subview to SearchViewController
+            view.addSubview(controller.view)
+            // Telling SearchViewController that LandscapeViewController now manages the parts of the screen it took over, which in this case is 100%
+            addChildViewController(controller)
+            
+            coordinator.animate(alongsideTransition: { _ in
+                // The controller is see through whilst the controller is going into landscape
+                controller.searchResults = self.searchResults
+                controller.view.alpha = 1
+                self.searchBar.resignFirstResponder()
+                
+                if self.presentedViewController != nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }) { _ in
+                // Telling the new controller that it has a parent view controller. Once animation is completed.
+                controller.didMove(toParentViewController: self)
+            }
+        }
+    }
+    
+    func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        if let controller = landscapeViewController {
+            controller.willMove(toParentViewController: self)
+            
+            
+            coordinator.animate(alongsideTransition: { _ in
+                controller.view.alpha = 0
+            }, completion: { _ in
+                controller.view.removeFromSuperview()
+                controller.removeFromParentViewController()
+                self.landscapeViewController = nil
+            })
+        }
+    }
+    
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         performSearch()
     }
@@ -44,6 +94,20 @@ class SearchViewController: UIViewController {
         
         // Open keyboard for Search as soon as app starts
         searchBar.becomeFirstResponder()
+    }
+    
+    // Portrait to Landscape
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        switch newCollection.verticalSizeClass {
+            // If Vertical Size class is compact the device has been flipped and we show the LandscapeViewController
+            case .compact:
+                showLandscape(with: coordinator)
+            // If the vertical size class is regulard the device is back to regular so we hide the LandscapeViewController
+            case .regular, .unspecified:
+                hideLandscape(with: coordinator)
+        }
     }
 
     struct TableViewCellIdentifiers {
