@@ -6,7 +6,7 @@
 //  Copyright © 2017 Fuad Adetoro. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 typealias SearchComplete = (Bool) -> Void
 
@@ -24,6 +24,7 @@ class Search {
     func performSearch(for text: String, category: Category, completion: @escaping SearchComplete) {
         if !text.isEmpty {
             dataTask?.cancel()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             state = .loading
             
             let url = iTunesURL(searchText: text, category: category)
@@ -51,6 +52,7 @@ class Search {
                 }
                 
                 DispatchQueue.main.async {
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     completion(success)
                 }
             }
@@ -98,6 +100,8 @@ class Search {
     
     private func parse(dictionary: [String: Any]) -> [SearchResult] {
         // Making sure the the dictionary contains 'results' if not leave function
+        var searchResults = [SearchResult]()
+        
         guard let array = dictionary["results"] as? [Any] else {
             print("Expected 'results' array")
             return []
@@ -107,6 +111,7 @@ class Search {
         for resultDict in array {
             // casting resultDict to dictionary to make sure we have the right value. Using "Any" because it could return Strings, Ints or even a boolean.
             if let resultDict = resultDict as? [String: Any] {
+                
                 var searchResult: SearchResult?
                 
                 if let wrapperType = resultDict["wrapperType"] as? String {
@@ -125,12 +130,12 @@ class Search {
                 }
                 
                 if let result = searchResult {
-                    searchResult.append(result)
+                    searchResults.append(result)
                 }
             }
         }
         
-        return searchResult
+        return searchResults
     }
     
     private func parse(track dictionary: [String: Any]) -> SearchResult {

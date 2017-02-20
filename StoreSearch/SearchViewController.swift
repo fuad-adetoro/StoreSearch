@@ -58,6 +58,10 @@ class SearchViewController: UIViewController {
             
             coordinator.animate(alongsideTransition: { _ in
                 controller.view.alpha = 0
+                
+                if self.presentedViewController != nil {
+                    dismiss(animated: true, completion: nil)
+                }
             }, completion: { _ in
                 controller.view.removeFromSuperview()
                 controller.removeFromParentViewController()
@@ -141,6 +145,7 @@ extension SearchViewController: UISearchBarDelegate {
                 }
             
                 self.tableView.reloadData()
+                self.landscapeViewController?.searchResultsReceived()
             })
         
             tableView.reloadData()
