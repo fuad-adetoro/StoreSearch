@@ -19,7 +19,7 @@ class LandscapeViewController: UIViewController {
         }, completion: nil )
     }
     
-    var searchResults = [SearchResult]()
+    var search: Search!
     
     private var firstTime = true
     
@@ -51,7 +51,7 @@ class LandscapeViewController: UIViewController {
         
         if firstTime {
             firstTime = false
-            tileButtons(searchResults)
+            tileButtons(search.searchResults)
         }
     }
     
@@ -120,7 +120,7 @@ class LandscapeViewController: UIViewController {
         }
         
         let buttonsPerPage = columnsPerPage * rowsPerPage
-        let numPages = 1 + (searchResults.count - 1) / buttonsPerPage
+        let numPages = 1 + (search.searchResults.count - 1) / buttonsPerPage
         
         scrollView.contentSize = CGSize(width: CGFloat(numPages)*scrollViewWidth, height: scrollView.bounds.size.height)
         
