@@ -121,27 +121,31 @@ class SearchViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetail" {
-            let controller = segue.destination as! DetailViewController
-            let indexPath = sender as! IndexPath
-            let searchResult = search.searchResults[indexPath.row]
-            controller.searchResult = searchResult
+            if case .results(let list) = search.state {
+                let controller = segue.destination as! DetailViewController
+                let indexPath = sender as! IndexPath
+                let searchResult = list[indexPath.row]
+                controller.searchResult = searchResult
+            }
         }
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func performSearch() {
-        search.performSearch(for: searchBar.text!, category: segmentedControl.selectedSegmentIndex, completion: { success in
+        if let category = Search.Category(rawValue: segmentedControl.selectedSegmentIndex) {
+            search.performSearch(for: searchBar.text!, category: category, completion: { success in
             
-            if !success {
-                self.showNetworkError()
-            }
+                if !success {
+                    self.showNetworkError()
+                }
             
-            self.tableView.reloadData()
-        })
+                self.tableView.reloadData()
+            })
         
-        tableView.reloadData()
-        searchBar.resignFirstResponder()
+            tableView.reloadData()
+            searchBar.resignFirstResponder()
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -157,29 +161,33 @@ extension SearchViewController: UITableViewDataSource {
     
     // Doesn't require override infront of function because UITableViewController isn't being subclassed and these methods haven't yet been defined.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if search.isLoading || search.searchResults.count == 0 {
-            return 1
-        } else if !search.hasSearched {
+        switch search.state {
+        case .notSearchedYet:
             return 0
+        case .loading, .noResults:
+            return 1
+        case .results(let list):
+            return list.count
         }
-        
-        return search.searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if search.isLoading {
+        switch search.state {
+        case .notSearchedYet:
+            fatalError("Should never get here!")
+        case .loading:
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell, for: indexPath)
             
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
-        } else if search.searchResults.count == 0 {
+        case .noResults:
             return tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.nothingFoundCell, for: indexPath)
-        } else {
+        case .results(let list):
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
             
-            let searchResult = search.searchResults[indexPath.row]
-    
+            let searchResult = list[indexPath.row]
+            
             cell.configure(for: searchResult)
             return cell
         }
@@ -191,9 +199,10 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if search.searchResults.count == 0 || search.isLoading {
+        switch search.state {
+        case .loading, .noResults, .notSearchedYet:
             return nil
-        } else {
+        case .results:
             return indexPath
         }
     }

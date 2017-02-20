@@ -11,24 +11,25 @@ import Foundation
 typealias SearchComplete = (Bool) -> Void
 
 class Search {
-    var searchResults: [SearchResult] = []
-    var hasSearched = false
-    var isLoading = false
+    enum State {
+        case notSearchedYet
+        case loading
+        case noResults
+        case results([SearchResult])
+    }
     
     private var dataTask: URLSessionDataTask? = nil
+    private(set) var state: State = .notSearchedYet
     
-    func performSearch(for text: String, category: Int, completion: @escaping SearchComplete) {
-        searchResults = []
-        
+    func performSearch(for text: String, category: Category, completion: @escaping SearchComplete) {
         if !text.isEmpty {
             dataTask?.cancel()
-            isLoading = true
-            hasSearched = true
-            searchResults = []
+            state = .loading
             
             let url = iTunesURL(searchText: text, category: category)
             let session = URLSession.shared
             dataTask = session.dataTask(with: url) { (data, response, error) in
+                self.state = .notSearchedYet
                 var success = false
                 
                 if let error = error as? NSError, error.code == -999 {
@@ -36,17 +37,17 @@ class Search {
                 }
                 
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let jsonData = data, let jsonDictionary = self.parse(json: jsonData) {
-                    self.searchResults = self.parse(dictionary: jsonDictionary)
-                    self.searchResults.sort(by: <)
+                    
+                    var searchResults = self.parse(dictionary: jsonDictionary)
+                    
+                    if searchResults.isEmpty {
+                        self.state = .noResults
+                    } else {
+                        searchResults.sort(by: <)
+                        self.state = .results(searchResults)
+                    }
                     
                     success = true
-                    self.isLoading = false
-                    return
-                }
-                
-                if !success {
-                    self.hasSearched = false
-                    self.isLoading = false
                 }
                 
                 DispatchQueue.main.async {
@@ -58,15 +59,24 @@ class Search {
         }
     }
     
-    private func iTunesURL(searchText: String, category: Int) -> URL {
-        let entityName: String
+    enum Category: Int {
+        case all = 0
+        case music
+        case software
+        case ebooks
         
-        switch category {
-        case 1: entityName = "musicTrack"
-        case 2: entityName = "software"
-        case 3: entityName = "ebook"
-        default: entityName = ""
+        var entityName: String {
+            switch self {
+            case .all: return ""
+            case .music: return "musicTrack"
+            case .ebooks: return "ebook"
+            case .software: return "software"
+            }
         }
+    }
+    
+    private func iTunesURL(searchText: String, category: Category) -> URL {
+        let entityName: String = category.entityName
         
         let escapedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let urlString = String(format: "https://itunes.apple.com/search?term=%@&limit=200&entity=%@", escapedSearchText, entityName)
@@ -115,12 +125,12 @@ class Search {
                 }
                 
                 if let result = searchResult {
-                    searchResults.append(result)
+                    searchResult.append(result)
                 }
             }
         }
         
-        return searchResults
+        return searchResult
     }
     
     private func parse(track dictionary: [String: Any]) -> SearchResult {
