@@ -60,7 +60,7 @@ class SearchViewController: UIViewController {
                 controller.view.alpha = 0
                 
                 if self.presentedViewController != nil {
-                    dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
             }, completion: { _ in
                 controller.view.removeFromSuperview()
