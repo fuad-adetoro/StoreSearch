@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class DetailViewController: UIViewController {
 
@@ -127,6 +128,13 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowMenu" {
+            let controller = segue.destination as! MenuViewController
+            controller.delegate = self
+        }
+    }
 }
 
 extension DetailViewController: UIGestureRecognizerDelegate {
@@ -151,5 +159,26 @@ extension DetailViewController: UIViewControllerTransitioningDelegate {
         case .fade:
             return FadeOutAnimationController()
         }
+    }
+}
+
+extension DetailViewController: MenuViewControllerDelegate {
+    func menuViewControllerSendSupportEmail(_ controller: MenuViewController) {
+        dismiss(animated: true) {
+            if MFMailComposeViewController.canSendMail() {
+                let controller = MFMailComposeViewController()
+                controller.setSubject(NSLocalizedString("Support Request", comment: "Email Subject"))
+                controller.setToRecipients(["fuad.adetoro96@gmail.com"])
+                controller.mailComposeDelegate = self
+                controller.modalPresentationStyle = .formSheet
+                self.present(controller, animated: true, completion: nil)
+            }
+        }
+    }
+}
+
+extension DetailViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
     }
 }
