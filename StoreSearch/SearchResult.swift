@@ -8,6 +8,19 @@
 
 import Foundation
 
+private let displayNamesForKind = [
+    "album": NSLocalizedString("Album", comment: "Localized kind: Album"),
+    "audioBook": NSLocalizedString("Audio Book", comment: "Localized kind: Audio Book"),
+    "book": NSLocalizedString("Book", comment: "Localized kind: Book"),
+    "e-Book": NSLocalizedString("E-Book", comment: "Localized kind: E-Book"),
+    "movie": NSLocalizedString("Movie", comment: "Localized kind: Movie"),
+    "musicVideo": NSLocalizedString("Music Video", comment: "Localized kind: Music Video"),
+    "podcast": NSLocalizedString("Podcast", comment: "Localized kind: Podcast"),
+    "app": NSLocalizedString("App", comment: "Localized kind: App"),
+    "song": NSLocalizedString("Song", comment: "Localized kind: Song"),
+    "tv-episode": NSLocalizedString("Episode", comment: "Localized kind: TV Episode")
+]
+
 class SearchResult {
     var name = ""
     var artistName = ""
@@ -22,30 +35,7 @@ class SearchResult {
     var genre = ""
     
     func kindForDisplay() -> String {
-        switch kind {
-        case "album":
-            return "Album"
-        case "audiobook":
-            return "Audio Book"
-        case "book":
-            return "Book"
-        case "ebook":
-            return "E-Book"
-        case "feature-movie":
-            return "Movie"
-        case "music-video":
-            return "Music Video"
-        case "podcast":
-            return "Podcast"
-        case "software":
-            return "App"
-        case "song":
-            return "Song"
-        case "tv-episode":
-            return "TV Episode"
-        default:
-            return kind
-        }
+        return displayNamesForKind[kind] ?? kind
     }
 }
 

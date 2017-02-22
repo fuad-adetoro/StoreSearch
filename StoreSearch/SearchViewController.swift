@@ -16,6 +16,8 @@ class SearchViewController: UIViewController {
     
     let search = Search()
     
+    weak var splitViewDetail: DetailViewController?
+    
     var landscapeViewController: LandscapeViewController?
     
     func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
@@ -90,8 +92,22 @@ class SearchViewController: UIViewController {
         // Table view was conflicting with the search bar so I moved it down by 64 points.
         tableView.contentInset = UIEdgeInsets(top: 108, left: 0, bottom: 0, right: 0)
         
-        // Open keyboard for Search as soon as app starts
-        searchBar.becomeFirstResponder()
+        title = NSLocalizedString("Search", comment: "Split-view master button")
+        
+        
+        // Open the keyboard once the app is opened if the device isn't an ipad.
+        if UIDevice.current.userInterfaceIdiom != .pad {
+            searchBar.becomeFirstResponder()
+        }
+    }
+    
+    // When item is selected on iPad the search controller stays visible this function will hide it
+    func hideMasterPane(){
+        UIView.animate(withDuration: 0.25, animations: { 
+            self.splitViewController!.preferredDisplayMode = .primaryHidden
+        }) { _ in
+            self.splitViewController!.preferredDisplayMode = .automatic
+        }
     }
     
     // Portrait to Landscape
@@ -115,9 +131,9 @@ class SearchViewController: UIViewController {
     }
     
     func showNetworkError() {
-        let alert = UIAlertController(title: "Whoops...", message: "There was an error reading from the iTunes Store. Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Whoops...", comment: "Localized string: Whoops"), message: NSLocalizedString("There was an error reading from the iTunes Store. Please try again.", comment: "Localized string: There was an error reading from the iTunes Store. Please try again."), preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let action = UIAlertAction(title: NSLocalizedString("OK", comment: "Localized String: OK"), style: .default, handler: nil)
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
@@ -130,6 +146,7 @@ class SearchViewController: UIViewController {
                 let indexPath = sender as! IndexPath
                 let searchResult = list[indexPath.row]
                 controller.searchResult = searchResult
+                controller.isPopUp = true
             }
         }
     }
@@ -199,8 +216,20 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+        searchBar.resignFirstResponder()
+        
+        if view.window!.rootViewController!.traitCollection.horizontalSizeClass == .compact {
+            tableView.deselectRow(at: indexPath, animated: true)
+            performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+        } else {
+            if case .results(let list) = search.state {
+                splitViewDetail?.searchResult = list[indexPath.row]
+            }
+            
+            if splitViewController!.displayMode != .allVisible {
+                hideMasterPane()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

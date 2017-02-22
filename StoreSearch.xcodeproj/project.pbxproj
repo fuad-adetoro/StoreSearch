@@ -26,6 +26,8 @@
 		A2DAC6D11E5B710C0048DD2D /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2DAC6D31E5B710C0048DD2D /* NothingFoundCell.xib */; };
 		A2DAC6D71E5B73B70048DD2D /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2DAC6D91E5B73B70048DD2D /* LoadingCell.xib */; };
 		A2DAC6DE1E5B79060048DD2D /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2DAC6E01E5B79060048DD2D /* SearchResultCell.xib */; };
+		A2DAC6E31E5B7C420048DD2D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2DAC6E11E5B7C420048DD2D /* Localizable.strings */; };
+		A2DAC6E71E5B837C0048DD2D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2DAC6E91E5B837C0048DD2D /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,10 @@
 		A2DAC6DB1E5B73E90048DD2D /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/LoadingCell.strings; sourceTree = "<group>"; };
 		A2DAC6DD1E5B78500048DD2D /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Main.strings; sourceTree = "<group>"; };
 		A2DAC6DF1E5B79060048DD2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SearchResultCell.xib; sourceTree = "<group>"; };
+		A2DAC6E21E5B7C420048DD2D /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A2DAC6E41E5B7D400048DD2D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A2DAC6E81E5B837C0048DD2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A2DAC6EA1E5B837E0048DD2D /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,7 @@
 		A2CD6D7F1E5279040023248B /* StoreSearch */ = {
 			isa = PBXGroup;
 			children = (
+				A2DAC6E11E5B7C420048DD2D /* Localizable.strings */,
 				A2CD6D801E5279040023248B /* AppDelegate.swift */,
 				A2CD6D871E5279060023248B /* Assets.xcassets */,
 				A2C9B1741E569CFE00CC63DB /* BounceAnimationController.swift */,
@@ -105,6 +112,7 @@
 				A2C9B1761E56A56100CC63DB /* SlideOutAnimationController.swift */,
 				A2CD6D9C1E553A100023248B /* UIImage+DownloadImage.swift */,
 				A2DAC6CF1E5A44130048DD2D /* tempFile.swift */,
+				A2DAC6E91E5B837C0048DD2D /* InfoPlist.strings */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
@@ -171,6 +179,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2CD6D881E5279060023248B /* Assets.xcassets in Resources */,
+				A2DAC6E71E5B837C0048DD2D /* InfoPlist.strings in Resources */,
+				A2DAC6E31E5B7C420048DD2D /* Localizable.strings in Resources */,
 				A2DAC6D71E5B73B70048DD2D /* LoadingCell.xib in Resources */,
 				A2DAC6DE1E5B79060048DD2D /* SearchResultCell.xib in Resources */,
 				A2DAC6D11E5B710C0048DD2D /* NothingFoundCell.xib in Resources */,
@@ -239,6 +249,24 @@
 				A2DAC6DF1E5B79060048DD2D /* Base */,
 			);
 			name = SearchResultCell.xib;
+			sourceTree = "<group>";
+		};
+		A2DAC6E11E5B7C420048DD2D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2DAC6E21E5B7C420048DD2D /* nl */,
+				A2DAC6E41E5B7D400048DD2D /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		A2DAC6E91E5B837C0048DD2D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A2DAC6E81E5B837C0048DD2D /* Base */,
+				A2DAC6EA1E5B837E0048DD2D /* nl */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -347,6 +375,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.FuadAdetoro.StoreSearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -360,6 +389,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.FuadAdetoro.StoreSearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
