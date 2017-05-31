@@ -1,5 +1,5 @@
 <h1>StoreSearch</h1><br />
-<p>StoreSearch is a universal search app using the iTunes API which allows searching for Music, E-Books & Software; You can also filter your search using the segmented control. This app supports both landscape and potrait and internationalism</p>
+<p>StoreSearch is a universal search app using the iTunes API which allows searching for Music, E-Books & Software; You can also filter your search using the segmented control. This app supports both landscape and potrait and also supports two languages Dutch & English</p>
 
 <p>Potrait:</p>
 <p>
